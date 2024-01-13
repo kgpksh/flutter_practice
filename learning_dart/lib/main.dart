@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 String getFullName(String firstName, String lastName) {
+  final multiStrings = '$firstName $lastName' * 30;
   return '$firstName $lastName';
 }
 
