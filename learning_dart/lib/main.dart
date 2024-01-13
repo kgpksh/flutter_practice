@@ -5,7 +5,43 @@ String getFullName(String firstName, String lastName) {
   return '$firstName $lastName';
 }
 
+void nullables() {
+  String? name = null;
+  print(name); // null
+  name = 'Tom';
+  print(name); // Tom
+
+  List<String>? names = null; // 리스트 주소가 null 가능
+  names = ['Foo', 'Bar'];
+  List<String?> otherNames = [null, 'Foo']; // 리스트 원소가 null 가능
+  List<String?>? AndOtherNames = [null, 'Foo']; // 리스트 주소와 원소 모두 null 가능
+
+  const String? a = null;
+  const String? b = 'Foo';
+  const String? c = 'Bar';
+
+  if(a == null) {
+    print('a is null');
+  } else if(b == null) {
+    print('b is null');
+  } else if(c == null) {
+    print('c is null');
+  } else {
+    print('Nothing is null');
+  }
+
+  // 다른 해결책 : ?? 왼쪽이 null 이 아니면 오른쪽 선택
+  final firstNonNullValue = a ?? b ?? c;
+  print(firstNonNullValue);
+
+  String? myName = 'myName';
+  myName ??= 'Another name'; // myName이 null이면 Another name 할당. 아니면 무시
+
+  final length = myName?.length ?? 0; // if문으로 null 체크를 하는 대신 myName이 null이면 length = 0으로 넣기
+}
+
 void main() {
+  nullables();
   runApp(const MyApp());
 }
 
