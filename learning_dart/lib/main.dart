@@ -50,8 +50,28 @@ void eTest(AnimalType animalType) {
   }
 }
 
+class Person {
+  final String name;
+  Person(this.name);
+
+  void run() {
+    print('Running');
+  }
+
+  void breathe() {
+    print('Breathing');
+  }
+
+  void printName() {
+    print(name);
+  }
+}
+
 void main() {
-  eTest(AnimalType.dog);
+  final person = Person('Foo Bar');
+  person.run();
+  person.breathe();
+  person.printName();
   runApp(const MyApp());
 }
 
