@@ -40,8 +40,18 @@ void nullables() {
   final length = myName?.length ?? 0; // if문으로 null 체크를 하는 대신 myName이 null이면 length = 0으로 넣기
 }
 
+enum AnimalType {cat, dog, bunny}
+
+void eTest(AnimalType animalType) {
+  if(animalType == AnimalType.cat) {
+    print("I love cat");
+  } else if(animalType == AnimalType.dog) {
+    print("I like dog");
+  }
+}
+
 void main() {
-  nullables();
+  eTest(AnimalType.dog);
   runApp(const MyApp());
 }
 
