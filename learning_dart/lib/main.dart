@@ -67,11 +67,24 @@ class Person {
   }
 }
 
+class LivingThing {
+  void breathe() {
+    print('Living thing is breathe');
+  }
+
+  void move() {
+    print('I am moving');
+  }
+}
+
+class Cat extends LivingThing {
+
+}
+
 void main() {
-  final person = Person('Foo Bar');
-  person.run();
-  person.breathe();
-  person.printName();
+  final fluffers = Cat();
+  fluffers.move();
+  fluffers.breathe();
   runApp(const MyApp());
 }
 
