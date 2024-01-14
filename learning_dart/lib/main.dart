@@ -3,21 +3,28 @@ import 'package:flutter/material.dart';
 class Cat {
   final String name;
   Cat(this.name);
-  factory Cat.fluffBall() {
-    return Cat('Fluff Ball');
-  }
+}
 
-  @override
-  bool operator == (covariant Cat other) => other.name == name; // operator ==은 Object 클래스에 정의 되어 있다. 이것을 오버라이드 가능함. covariant는 상위에서 정의된 매개변수를 잊게 해주는 것.
-  @override
-  int get hashCode => name.hashCode;
+//  확장. Cat 클래스에 추가 기능 부여.
+extension CatAddon on Cat {
+  void move() {
+    print('Cat $name is running');
+  }
+}
+
+// Unnamed extension. 문자열에 정수로 변환 기능 부여.
+extension on String {
+  int parseInt() {
+    return int.parse(this);
+  }
 }
 
 void main() {
-  final cat1 = Cat('foo');
-  final cat2 = Cat('foo');
+  final cat = Cat('foo');
+  cat.move();
 
-  print(cat1 == cat2);
+  final int parsedInt = '35'.parseInt();
+  print(parsedInt);
   runApp(const MyApp());
 }
 
