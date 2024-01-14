@@ -1,30 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Cat {
-  final String name;
-  Cat(this.name);
+Future<int> delayedMultiple(int a) {
+  return Future.delayed(const Duration(seconds: 2), () => a * 3);
 }
 
-//  확장. Cat 클래스에 추가 기능 부여.
-extension CatAddon on Cat {
-  void move() {
-    print('Cat $name is running');
-  }
-}
-
-// Unnamed extension. 문자열에 정수로 변환 기능 부여.
-extension on String {
-  int parseInt() {
-    return int.parse(this);
-  }
+// 내부에서 await을 쓸려면 async는 붙여야 한다.
+void testAsync() async {
+  // final result = delayedMultiple(3); 이처럼 await를 붙이지 않으면 단순 Future<int> 객체를 반환 한다
+  final result = await delayedMultiple(13);
+  print(result);
 }
 
 void main() {
-  final cat = Cat('foo');
-  cat.move();
-
-  final int parsedInt = '35'.parseInt();
-  print(parsedInt);
+  testAsync();
   runApp(const MyApp());
 }
 
