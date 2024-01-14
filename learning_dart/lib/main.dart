@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
-Future<int> delayedMultiple(int a) {
-  return Future.delayed(const Duration(seconds: 2), () => a * 3);
+Stream<String> getName() {
+  // 1초마다 Foo return 반복
+  return Stream.periodic(const Duration(seconds: 1), (value) {
+    return 'Foo';
+  });
 }
 
-// 내부에서 await을 쓸려면 async는 붙여야 한다.
-void testAsync() async {
-  // final result = delayedMultiple(3); 이처럼 await를 붙이지 않으면 단순 Future<int> 객체를 반환 한다
-  final result = await delayedMultiple(13);
-  print(result);
+void testStream() async {
+  await for (final value in getName()) {
+    print(value);
+  }
+  
+  print('Stream finished working');
 }
 
 void main() {
-  testAsync();
+  testStream();
   runApp(const MyApp());
 }
 
