@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
-Stream<String> getName() {
-  // 1초마다 Foo return 반복
-  return Stream.periodic(const Duration(seconds: 1), (value) {
-    return 'Foo';
-  });
+// Generator라 한다. lazy definition이다. async*의 경우 Stream으로 내보내는 데 쓴다.
+// yield*의 경우 재귀적인 호출이 필요 할 때 쓴다.
+Iterable<int> getOneTwoThree() sync* {
+  yield 1;
+  yield 2;
+  yield 3;
 }
-
-void testStream() async {
-  await for (final value in getName()) {
-    print(value);
-  }
-  
-  print('Stream finished working');
-}
-
 void main() {
-  testStream();
+  for(final value in getOneTwoThree()) {
+    print(value);
+    // value가 2일 경우 종료. lazy로 돌아가기 때문에 3에 해당하는 작업은 실행 되지 않는다.
+    if(value == 2) {
+      break;
+    }
+  }
+
+  // Iterable에 인덱스로 접근 할 때는 iterable[index] 방식이 아니라 elementAt을 써야 한다.
+  print(getOneTwoThree().elementAt(1));
   runApp(const MyApp());
 }
 
