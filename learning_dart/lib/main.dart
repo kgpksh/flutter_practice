@@ -6,10 +6,18 @@ class Cat {
   factory Cat.fluffBall() {
     return Cat('Fluff Ball');
   }
+
+  @override
+  bool operator == (covariant Cat other) => other.name == name; // operator ==은 Object 클래스에 정의 되어 있다. 이것을 오버라이드 가능함. covariant는 상위에서 정의된 매개변수를 잊게 해주는 것.
+  @override
+  int get hashCode => name.hashCode;
 }
 
 void main() {
-  final fluffers = Cat.fluffBall();
+  final cat1 = Cat('foo');
+  final cat2 = Cat('foo');
+
+  print(cat1 == cat2);
   runApp(const MyApp());
 }
 
