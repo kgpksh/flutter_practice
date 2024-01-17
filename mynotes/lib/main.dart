@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
+import 'dart:developer' as devtools show log;
 
 import 'firebase_options.dart';
 
@@ -39,6 +40,7 @@ class HomePage extends StatelessWidget {
           final user = FirebaseAuth.instance.currentUser;
           if(user != null) {
             if(user.emailVerified) {
+              return const NoteView();
               print("Email is verified");
             } else {
               return const VerifyEmailView();
@@ -46,11 +48,45 @@ class HomePage extends StatelessWidget {
           } else {
             return const LoginView();
           }
-          return const Text('Done');
           default :
             return const CircularProgressIndicator();
         }
       },
+    );
+  }
+}
+
+enum MenuActions { logout }
+
+class NoteView extends StatefulWidget {
+  const NoteView({super.key});
+
+  @override
+  State<NoteView> createState() => _NoteViewState();
+}
+
+class _NoteViewState extends State<NoteView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Main UI'),
+        actions: [
+          PopupMenuButton<MenuActions>(
+            onSelected: (value) {
+              devtools.log('밸류 : ' + value.toString());
+          },
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem<MenuActions>(
+                  value: MenuActions.logout,
+                  child: Text('Log out'),
+                ),
+              ];
+          },)
+        ],
+      ),
+      body: const Text('Hello world'),
     );
   }
 }
