@@ -41,7 +41,6 @@ class HomePage extends StatelessWidget {
           if(user != null) {
             if(user.emailVerified) {
               return const NoteView();
-              print("Email is verified");
             } else {
               return const VerifyEmailView();
             }
@@ -73,8 +72,18 @@ class _NoteViewState extends State<NoteView> {
         title: const Text('Main UI'),
         actions: [
           PopupMenuButton<MenuActions>(
-            onSelected: (value) {
-              devtools.log('밸류 : ' + value.toString());
+            onSelected: (value) async {
+              switch (value) {
+                case MenuActions.logout:
+                  final shouldLogout = await showLogOutDialog(context);
+                  if(shouldLogout) {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/login/',
+                        (_) => false,
+                    );
+                  }
+              }
           },
             itemBuilder: (context) {
               return [
@@ -89,4 +98,20 @@ class _NoteViewState extends State<NoteView> {
       body: const Text('Hello world'),
     );
   }
+}
+Future<bool> showLogOutDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Sign out'),
+          content: const Text('Are you sure you want to sign out?'),
+          actions: [
+            TextButton(onPressed: () {Navigator.of(context).pop(false);},child: const Text('Cancel')),
+            TextButton(onPressed: () {Navigator.of(context).pop(true);},child: const Text('Log out')),
+          ],
+        );
+      }
+  )
+  .then((value) => value ?? false);
 }
