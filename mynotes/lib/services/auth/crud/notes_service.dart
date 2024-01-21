@@ -12,9 +12,15 @@ class NoteService {
   List<DatabaseNote> _notes = [];
 
   static final NoteService _shared = NoteService._sharedInstance();
-  NoteService._sharedInstance();
+  NoteService._sharedInstance() {
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.sink.add(_notes);
+      },
+    );
+  }
   factory NoteService() => _shared;
-  final _notesStreamController = StreamController<List<DatabaseNote>>.broadcast();
+  late final _notesStreamController;
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
   Future<DatabaseUser> getOrCreateUser({required String email}) async {
@@ -273,7 +279,7 @@ class DatabaseNote {
 
   DatabaseNote.fromRow(Map<String, Object?> map)
       : id = map[idColumn] as int,
-        userId = map[emailColumn] as int,
+        userId = map[userIdColumn] as int,
         text = map[textColumn] as String,
         isSyncedWithCloud = (map[isSyncedWithCloudColumn] as int) == 1 ? true : false;
 
