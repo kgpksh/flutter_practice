@@ -33,7 +33,7 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main UI'),
+        title: const Text('Your Notes'),
         actions: [
           PopupMenuButton<MenuActions>(
             onSelected: (value) async {
