@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/auth/crud/notes_service.dart';
 
-import '../constants/routes.dart';
-import '../enums/menu_action.dart';
+import '../../constants/routes.dart';
+import '../../enums/menu_action.dart';
 
 class NoteView extends StatefulWidget {
   const NoteView({super.key});
