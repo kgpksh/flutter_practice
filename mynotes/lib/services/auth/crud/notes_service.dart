@@ -40,16 +40,20 @@ class NoteService {
     _notes = allNotes.toList();
     _notesStreamController.add(_notes);
   }
+
   Future<DatabaseNote> updateNote({
     required DatabaseNote note, required String text,}) async {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
 
     await getNote(id: note.id);
-    final updatesCount = db.update(noteTable, {
+    final updatesCount = await db.update(noteTable, {
       textColumn : text,
       isSyncedWithCloudColumn : 0,
-    });
+    },
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
 
     if(updatesCount == 0) {
       throw CouldNotUpdateNote();
