@@ -10,7 +10,8 @@ import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
+  runApp(
+    MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -18,11 +19,11 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-        loginRoute : (context) => const LoginView(),
-        registerRoute : (context) => const RegisterView(),
-        notesRoute : (context) => const NoteView(),
-        verifyEmailRoute : (context) => const VerifyEmailView(),
-        createOrUpdateNoteRoute : (context) => const CreateUpdateNoteView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const NoteView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
+        createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
       },
     ),
   );
@@ -38,17 +39,17 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-          final user = AuthService.firebase().currentUser;
-          if(user != null) {
-            if(user.isEmailVerified) {
-              return const NoteView();
+            final user = AuthService.firebase().currentUser;
+            if (user != null) {
+              if (user.isEmailVerified) {
+                return const NoteView();
+              } else {
+                return const VerifyEmailView();
+              }
             } else {
-              return const VerifyEmailView();
+              return const LoginView();
             }
-          } else {
-            return const LoginView();
-          }
-          default :
+          default:
             return const CircularProgressIndicator();
         }
       },
