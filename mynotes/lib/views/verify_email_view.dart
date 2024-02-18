@@ -17,28 +17,30 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       appBar: AppBar(
         title: const Text('Verify Email'),
       ),
-      body: Column(
-        children: [
-          const Text(
-              "We've sent an email verifiction. Please open it to verify your account."),
-          const Text(
-              "If you haven't receive a verification email yet, press the button below."),
-          TextButton(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Text(
+                "We've sent an email verifiction. Please open it to verify your account."),
+            const Text(
+                "If you haven't receive a verification email yet, press the button below."),
+            TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(
+                        const AuthEventSendEmailVerification(),
+                      );
+                },
+                child: const Text('Send an email address')),
+            TextButton(
               onPressed: () {
                 context.read<AuthBloc>().add(
-                      const AuthEventSendEmailVerification(),
+                      const AuthEventLogout(),
                     );
               },
-              child: const Text('Send an email address')),
-          TextButton(
-            onPressed: () {
-              context.read<AuthBloc>().add(
-                    const AuthEventLogout(),
-                  );
-            },
-            child: const Text('Restart'),
-          )
-        ],
+              child: const Text('Restart'),
+            )
+          ],
+        ),
       ),
     );
   }
